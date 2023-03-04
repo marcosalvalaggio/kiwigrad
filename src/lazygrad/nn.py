@@ -76,7 +76,6 @@ class MLP(Module):
             else:
                 load_param = Value(param)
                 load_weights.append(load_param)
-        print(load_weights)
         i = 0
         for layer in self.layers:
             for neuron in layer.neurons:
@@ -129,7 +128,7 @@ if __name__ == "__main__":
     print(par)
 
     print("\nsave test")
-    #model.save(save_name="test")
+    model.save(save_name="test")
 
     print("\nload test")
     model.load(save_name="test")
