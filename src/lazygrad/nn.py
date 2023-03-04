@@ -1,5 +1,3 @@
-#NOTES - se passo a un neurone un oggetto non iterabile (lista) non funziona
-#NOTES - il load funziona, devo solo implementare il save picle rispettando la formattazione e poi ci sono 
 import random
 from .engine import Value
 import pickle
