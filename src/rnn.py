@@ -1,6 +1,6 @@
 import random
-from micrograd.engine import Value
-from micrograd.nn import Module
+from .engine import Value
+from .nn import Module
 
 
 class RNNNeuron(Module):

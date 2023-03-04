@@ -1,7 +1,7 @@
 #NOTES - se passo a un neurone un oggetto non iterabile (lista) non funziona
 #NOTES - il load funziona, devo solo implementare il save picle rispettando la formattazione e poi ci sono 
 import random
-from micrograd.engine import Value
+from .engine import Value
 import pickle
 
 
@@ -63,6 +63,9 @@ class MLP(Module):
     def parameters(self):
         return [p for layer in self.layers for p in layer.parameters()]
     
+    def __repr__(self):
+        return f"MLP of [{', '.join(str(layer) for layer in self.layers)}]"
+    
     def load(self, save_name: str = "weights"):
         file_name = f'{save_name}.pkl'
         with open(file_name, 'rb') as f:
@@ -93,8 +96,6 @@ class MLP(Module):
         with open(file_name, 'wb') as f:
             pickle.dump(weights, f)
 
-    def __repr__(self):
-        return f"MLP of [{', '.join(str(layer) for layer in self.layers)}]"
 
 
 if __name__ == "__main__":
