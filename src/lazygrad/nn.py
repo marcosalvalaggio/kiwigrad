@@ -97,40 +97,34 @@ class MLP(Module):
 
 if __name__ == "__main__":
 
-    x1 = Value(1.0)
-    x2 = Value(2.0)
-    x3 = Value(3.0)
-    print(x1)
-    print(x2)
-    print(x3)
-    x = [x1,x2,x3]
-    print("\nNeuron forward")
-    n = Neuron(3)
-    out = n(x)
-    print(out)
-    #res = 2*x1 + x2 + 3*x3
-    #print(res)
-    #res.backward()
-    print("\nBackward")
-    out.backward()
-    print(x1)
-    print(x2)
-    print(x3)
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    df_x = pd.read_csv("../../test/data/x.csv", sep=";")
+    xs = df_x.to_numpy()
+    print(xs.shape)
+    df_y = pd.read_csv("../../test/data/x.csv/y.csv", sep=";")
+    y = df_y.to_numpy().squeeze()
+    print(y.shape)
+    model = MLP(6, [16, 1]) # 1-layer neural network
+    print(model)
+    print("number of parameters", len(model.parameters()))
 
-    print("\nMLP")
-    x = Value(1.)
-    model = MLP(1, [3,1])
-    out = model([x])
-    print(out)
+    # loop
+    for k in range(30):
+        for i in range(len(xs)):
+            output = model(xs[i])
+            target = y[i]
+            loss = ((output - target) ** 2)
+            loss.backward()
+            for p in model.parameters():
+                p.data += -0.001 * p.grad 
+            model.zero_grad()
+        if k%5 == 0:
+            print(k, loss)
+    
+    print('\nTEST')
+    output = model(xs[i])
+    target = y[i]
+    print(f'output: {output.data}', f'target: {target}')
 
-    print("\nparameters")
-    par = model.parameters()
-    print(par)
-
-    print("\nsave test")
-    model.save(save_name="test")
-
-    print("\nload test")
-    model.load(save_name="test")
-    out = model([x])
-    print(out) # -0.756
