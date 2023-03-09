@@ -124,7 +124,7 @@ if __name__ == "__main__":
             print(k, loss)
     
     print('\nTEST')
-    output = model(xs[i])
-    target = y[i]
+    output = model(xs[0])
+    target = y[0]
     print(f'output: {output.data}', f'target: {target}')
 
