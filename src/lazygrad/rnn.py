@@ -8,7 +8,7 @@ class RNNNeuron(Module):
     def __init__(self, nin, nonlin=True):
         self.w_xh = [Value(random.uniform(-1,1)) for _ in range(nin)]
         self.w_hh = Value(random.uniform(-1,1)) 
-        self.b = Value(0)
+        self.b = Value(random.uniform(-1,1))
         self.h = Value(0)
         self.nonlin = nonlin
  
