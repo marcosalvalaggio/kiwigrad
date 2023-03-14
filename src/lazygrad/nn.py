@@ -15,9 +15,12 @@ class Module:
 
 class Neuron(Module):
 
-    def __init__(self, nin, nonlin=True):
+    def __init__(self, nin, bias: bool = True, nonlin: bool =True):
         self.w = [Value(random.uniform(-1,1)) for _ in range(nin)]
-        self.b = Value(random.uniform(-1,1))
+        if bias: 
+            self.b = Value(random.uniform(-1,1))
+        else: 
+            self.b = Value(0.)
         self.nonlin = nonlin
 
     def __call__(self, x):
@@ -33,8 +36,8 @@ class Neuron(Module):
 
 class Layer(Module):
 
-    def __init__(self, nin, nout, **kwargs):
-        self.neurons = [Neuron(nin, **kwargs) for _ in range(nout)]
+    def __init__(self, nin, nout, bias: bool = True, **kwargs):
+        self.neurons = [Neuron(nin, bias=bias, **kwargs) for _ in range(nout)]
 
     def __call__(self, x):
         out = [n(x) for n in self.neurons]
@@ -49,9 +52,9 @@ class Layer(Module):
 
 class MLP(Module):
 
-    def __init__(self, nin, nouts):
+    def __init__(self, nin, nouts, bias: bool = True):
         sz = [nin] + nouts
-        self.layers = [Layer(sz[i], sz[i+1], nonlin=i!=len(nouts)-1) for i in range(len(nouts))]
+        self.layers = [Layer(sz[i], sz[i+1], nonlin=i!=len(nouts)-1, bias = bias) for i in range(len(nouts))]
 
     def __call__(self, x):
         for layer in self.layers:
@@ -100,13 +103,14 @@ if __name__ == "__main__":
     import numpy as np
     import matplotlib.pyplot as plt
     import pandas as pd
+    from sklearn.metrics import r2_score
     df_x = pd.read_csv("../../test/data/x.csv", sep=";")
     xs = df_x.to_numpy()
     print(xs.shape)
     df_y = pd.read_csv("../../test/data/x.csv/y.csv", sep=";")
     y = df_y.to_numpy().squeeze()
     print(y.shape)
-    model = MLP(6, [16, 1]) # 1-layer neural network
+    model = MLP(6, [16, 1], bias=True) # 1-layer neural network
     print(model)
     print("number of parameters", len(model.parameters()))
 
@@ -127,4 +131,9 @@ if __name__ == "__main__":
     output = model(xs[0])
     target = y[0]
     print(f'output: {output.data}', f'target: {target}')
+
+    # r2 score
+    output = [model(x).data for x in xs]
+    r2 = r2_score(y, output)
+    print(f'r2 score: {r2}')
 
