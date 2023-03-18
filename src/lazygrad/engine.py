@@ -91,6 +91,18 @@ class Value:
         out._backward = _backward
         
         return out
+    
+    
+    def log(self):
+        if self.data <= 0:
+            raise ValueError("can't log negative or zero value")
+        x = self.data
+        out = Value(math.log(x), (self,), 'log')
+
+        def _backward():
+            self.grad = (x**(-1)) * out.grad
+        out._backward = _backward
+        return out
 
 
     def backward(self):
@@ -155,3 +167,12 @@ if __name__ == "__main__":
     print(d)
     print(a.grad)
     print(b.grad)
+
+    # log
+    print('\nLOG')
+    a = Value(2.)
+    b = a.log()
+    b.backward()
+    print(a)
+    print(b)
+    print(a.grad)
