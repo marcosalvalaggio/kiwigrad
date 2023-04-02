@@ -1,5 +1,3 @@
-# cython: language_level=3
-
 import numpy as np 
 
 def primes(int nb_primes):
