@@ -1,1 +1,1 @@
-include femtograd/primes.pyx
+include kiwigrad/primes.pyx
