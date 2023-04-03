@@ -1,6 +1,6 @@
 # Kiwigrad
 
-Kiwigrad? yes, another [micrograd](https://github.com/karpathy/micrograd) fork.
+Kiwigrad? yes, another [micrograd](https://github.com/karpathy/micrograd) version.
 
 ## Install 
 
