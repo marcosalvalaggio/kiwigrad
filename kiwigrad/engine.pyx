@@ -1,3 +1,6 @@
+# cython: warning_errors=-Wno-fallthrough
+# cython: language_level=3
+
 import math 
 
 class Value:

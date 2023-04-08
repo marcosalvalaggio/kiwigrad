@@ -1,9 +1,9 @@
 from .graph import draw_dot
 import pyximport
-pyximport.install(language_level=3, setup_args={'options': {'build_ext': {'--no-cython-warnings': True}}})
+pyximport.install(language_level=3)
 from .engine import Value
 
-__version__ = "0.0.5"
+__version__ = "0.0.6"
 
 __all__ = [
     "Value",
