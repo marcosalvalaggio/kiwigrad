@@ -1,1 +1,1 @@
-include kiwigrad/primes.pyx
+include kiwigrad/*.pyx

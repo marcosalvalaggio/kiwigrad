@@ -31,4 +31,3 @@ def draw_dot(root, format='svg', rankdir='LR'):
         dot.edge(str(id(n1)), str(id(n2)) + n2._op)
     
     return dot
-

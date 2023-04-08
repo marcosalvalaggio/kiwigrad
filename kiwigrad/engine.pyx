@@ -1,19 +1,36 @@
 # https://pytorch.org/blog/overview-of-pytorch-autograd-engine/
 import math 
+from typing import Union
 
 class Value:
-    """ stores a single scalar value and its gradient """
+    """ 
+    A class for storing a single scalar value and its gradient. 
 
-    def __init__(self, data, _children=(), _op=''):
+    Args:
+        data (Union[float, int]): A scalar value.
+
+    Examples: 
+        >>> from kiwigrad import Value 
+        >>> a = Value(2.)
+        >>> b = Value(3.)
+        >>> c = a * b
+        >>> c.backward()
+        >>> a.grad
+        >>> b.grad
+    """
+
+    def __init__(self, data: Union[float, int], _children=(), _op='') -> None:
         self.data = data
         self.grad = 0
-        # internal variables used for autograd graph construction
-        self._backward = lambda: None
+        self._backward = lambda: None # internal variables used for autograd graph construction
         self._prev = set(_children)
         self._op = _op # the op that produced this node, for graphviz / debugging / etc
 
 
-    def __add__(self, other):
+    def __add__(self, other) -> 'Value':
+        """
+        Adds two `Value` objects together.
+        """
         other = other if isinstance(other, Value) else Value(other)
         out = Value(self.data + other.data, (self, other), '+')
 
@@ -26,6 +43,9 @@ class Value:
 
 
     def __mul__(self, other):
+        """
+        Multiplies two `Value` objects together.
+        """
         other = other if isinstance(other, Value) else Value(other)
         out = Value(self.data * other.data, (self, other), '*')
 
@@ -38,6 +58,9 @@ class Value:
 
 
     def __pow__(self, other):
+        """
+        Raises the `Value` object to the power of `other`.
+        """
         assert isinstance(other, (int, float)), "only supporting int/float powers for now"
         out = Value(self.data**other, (self,), f'**{other}')
 
@@ -49,6 +72,9 @@ class Value:
 
 
     def relu(self):
+        """
+        Computes the rectified linear unit (ReLU) function of the `Value` object.
+        """
         out = Value(0 if self.data < 0 else self.data, (self,), 'ReLU')
 
         def _backward():
@@ -59,6 +85,9 @@ class Value:
 
 
     def sigmoid(self):
+        """
+        Computes the sigmoid function of the `Value` object.
+        """
         x = self.data
         t = (1 + math.exp(-x))**-1
         out = Value(t, (self,), 'sigmoid')
@@ -71,6 +100,9 @@ class Value:
 
 
     def tanh(self):
+        """
+        Computes the hyperbolic tangent function of the `Value` object.
+        """
         x = self.data
         t = (math.exp(2*x) - 1)/(math.exp(2*x) + 1)
         out = Value(t, (self, ), 'tanh')
@@ -83,6 +115,9 @@ class Value:
     
 
     def exp(self):
+        """
+        Computes the exponential function of the `Value` object.
+        """
         x = self.data
         out = Value(math.exp(x), (self, ), 'exp')
         
@@ -94,6 +129,9 @@ class Value:
     
     
     def log(self):
+        """
+        Computes the natural logarithm of the `Value` object.
+        """
         if self.data <= 0:
             raise ValueError("can't log negative or zero value")
         x = self.data
@@ -106,10 +144,12 @@ class Value:
 
 
     def backward(self):
-
+        """
+        Computes the gradients of all previous nodes.
+        """
         # topological order all of the children in the graph
-        topo = []
-        visited = set()
+        cdef list topo = []
+        cdef set visited = set()
         def build_topo(v):
             if v not in visited:
                 visited.add(v)
@@ -117,7 +157,6 @@ class Value:
                     build_topo(child)
                 topo.append(v)
         build_topo(self)
-
         # go one variable at a time and apply the chain rule to get its gradient
         self.grad = 1
         for v in reversed(topo):
@@ -125,54 +164,57 @@ class Value:
 
 
     def __neg__(self): # -self
+        """
+        Computes the negative of the `Value` object.
+        """
         return self * -1
 
 
     def __radd__(self, other): # other + self
+        """
+        Adds a `Value` object to another value.
+        """
         return self + other
 
 
     def __sub__(self, other): # self - other
+        """
+        Subtracts a `Value` object from another `Value` object.
+        """
         return self + (-other)
 
 
     def __rsub__(self, other): # other - self
+        """
+        Subtracts a `Value` object from another value.
+        """
         return other + (-self)
 
 
     def __rmul__(self, other): # other * self
+        """
+        Multiplies a `Value` object with another value.
+        """
         return self * other
 
 
     def __truediv__(self, other): # self / other
+        """
+        Divides a `Value` object by another `Value` object.
+        """
         return self * other**-1
 
 
     def __rtruediv__(self, other): # other / self
+        """
+        Divides a value by a `Value` object.
+        """
         return other * self**-1
 
 
     def __repr__(self):
+        """
+        Returns a string representation of the `Value` object.
+        """
         return f"Value(data={self.data}, grad={self.grad})"
     
-
-if __name__ == "__main__":
-
-    a = Value(2.)
-    b = Value(3.)
-    c = a + b
-    d = c.sigmoid()
-    d.backward()
-    print(c)
-    print(d)
-    print(a.grad)
-    print(b.grad)
-
-    # log
-    print('\nLOG')
-    a = Value(2.)
-    b = a.log()
-    b.backward()
-    print(a)
-    print(b)
-    print(a.grad)
