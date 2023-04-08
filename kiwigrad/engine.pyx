@@ -1,25 +1,8 @@
-# https://pytorch.org/blog/overview-of-pytorch-autograd-engine/
 import math 
-from typing import Union
 
 class Value:
-    """ 
-    A class for storing a single scalar value and its gradient. 
-
-    Args:
-        data (Union[float, int]): A scalar value.
-
-    Examples: 
-        >>> from kiwigrad import Value 
-        >>> a = Value(2.)
-        >>> b = Value(3.)
-        >>> c = a * b
-        >>> c.backward()
-        >>> a.grad
-        >>> b.grad
-    """
-
-    def __init__(self, data: Union[float, int], _children=(), _op='') -> None:
+    
+    def __init__(self, data, _children=(), _op=''):
         self.data = data
         self.grad = 0
         self._backward = lambda: None # internal variables used for autograd graph construction
@@ -27,7 +10,7 @@ class Value:
         self._op = _op # the op that produced this node, for graphviz / debugging / etc
 
 
-    def __add__(self, other) -> 'Value':
+    def __add__(self, other):
         """
         Adds two `Value` objects together.
         """
@@ -217,4 +200,3 @@ class Value:
         Returns a string representation of the `Value` object.
         """
         return f"Value(data={self.data}, grad={self.grad})"
-    
