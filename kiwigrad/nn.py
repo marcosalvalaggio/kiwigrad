@@ -1,6 +1,3 @@
-# cython: warning_errors=-Wno-fallthrough
-# cython: language_level=3
-
 import random
 from .engine import Value
 import pickle
@@ -71,7 +68,7 @@ class MLP(Module):
         return f"MLP of [{', '.join(str(layer) for layer in self.layers)}]"
     
     def save(self, save_name: str = "weights"):
-        cdef list weights = []
+        weights = []
         for layer in self.layers:
             for neuron in layer.neurons:
                 weights.append([i.data for i in neuron.w])
@@ -79,12 +76,12 @@ class MLP(Module):
         file_name = f'{save_name}.pkl'
         with open(file_name, 'wb') as f:
             pickle.dump(weights, f)
-
+    
     def load(self, save_name: str = "weights"):
         file_name = f'{save_name}.pkl'
         with open(file_name, 'rb') as f:
             params = pickle.load(f)
-        cdef list load_weights = []
+        load_weights = []
         for param in params:
             if isinstance(param, list):
                 load_param = [Value(i) for i in param]
@@ -92,9 +89,50 @@ class MLP(Module):
             else:
                 load_param = Value(param)
                 load_weights.append(load_param)
-        cdef int i = 0
+        i = 0
         for layer in self.layers:
             for neuron in layer.neurons:
                 neuron.w = load_weights[i]
                 neuron.b = load_weights[i+1]
                 i += 2
+
+
+if __name__ == "__main__":
+
+    import numpy as np
+    import matplotlib.pyplot as plt
+    import pandas as pd
+    from sklearn.metrics import r2_score
+    df_x = pd.read_csv("../../test/data/x.csv", sep=";")
+    xs = df_x.to_numpy()
+    print(xs.shape)
+    df_y = pd.read_csv("../../test/data/x.csv/y.csv", sep=";")
+    y = df_y.to_numpy().squeeze()
+    print(y.shape)
+    model = MLP(6, [16, 1], bias=True) # 1-layer neural network
+    print(model)
+    print("number of parameters", len(model.parameters()))
+
+    # loop
+    for k in range(30):
+        for i in range(len(xs)):
+            output = model(xs[i])
+            target = y[i]
+            loss = ((output - target) ** 2)
+            loss.backward()
+            for p in model.parameters():
+                p.data += -0.001 * p.grad 
+            model.zero_grad()
+        if k%5 == 0:
+            print(k, loss)
+    
+    print('\nTEST')
+    output = model(xs[0])
+    target = y[0]
+    print(f'output: {output.data}', f'target: {target}')
+
+    # r2 score
+    output = [model(x).data for x in xs]
+    r2 = r2_score(y, output)
+    print(f'r2 score: {r2}')
+
