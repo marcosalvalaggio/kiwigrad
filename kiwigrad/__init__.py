@@ -2,7 +2,7 @@ from .graph import draw_dot
 import os
 os.environ['CYTHON_FLAGS'] = '--directive=warn.implicit_fallthrough=False'
 import pyximport
-pyximport.install()
+pyximport.install(language_level=3)
 from .engine import Value
 from .nn import (Neuron, Layer, MLP)
 
