@@ -1,4 +1,3 @@
-from .graph import draw_dot
 import os
 os.environ['CYTHON_WARNINGS'] = 'none'
 os.environ['CYTHON_NO_PYTHON_FALLTHROUGH'] = '1'
@@ -9,7 +8,7 @@ pyximport.install(language_level=3)
 from .engine import Value
 from .nn import (Neuron, Layer, MLP)
 
-__version__ = "0.14"
+__version__ = "0.15"
 
 __all__ = [
     "Value",
