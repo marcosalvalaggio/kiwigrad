@@ -4,7 +4,7 @@ from .neurons import Neuron, RNN1Neuron
 from .layers import Layer, RNN1Layer
 from .nn import MLP
 
-__version__ = "0.18"
+__version__ = "0.19"
 
 __all__ = [
     "Value",

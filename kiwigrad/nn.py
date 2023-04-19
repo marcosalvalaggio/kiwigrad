@@ -6,9 +6,8 @@ from .skeleton import Module
 
 class MLP(Module):
 
-    # def __init__(self, nin, nouts, bias: bool = True):
-    #     sz = [nin] + nouts
-    #     self.layers = [Layer(sz[i], sz[i+1], nonlin=i!=len(nouts)-1, bias = bias) for i in range(len(nouts))]
+    def __init__(self, layers):
+        self.layers = layers
 
     def __call__(self, x):
         for layer in self.layers:
