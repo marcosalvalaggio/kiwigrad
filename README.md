@@ -6,7 +6,7 @@
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) [![PyPI version fury.io](https://badge.fury.io/py/kiwigrad.svg)](https://pypi.python.org/pypi/kiwigrad/)
 
-Kiwigrad? yes, another [micrograd](https://github.com/karpathy/micrograd) version.
+Kiwigrad? yes, it is another version of [micrograd](https://github.com/karpathy/micrograd) that was created just for fun and experimentation..
 
 ## Install 
 
@@ -18,7 +18,7 @@ pip install kiwigrad
 
 ## Kiwigrad Library
 
-Kiwigrad library is a modified version of the micrograd package with additional features. The main features added to Kiwigrad are:
+Kiwigrad library is a modified version of the [micrograd](https://github.com/karpathy/micrograd) package with additional features. The main features added to Kiwigrad are:
 
 * A method for saving and loading the weights of a trained model.
 * Support for RNN1 feedforward neural networks.
