@@ -2,4 +2,3 @@ kiwigrad.egg-info
 dist
 kiwigrad/__pycache__
 *.ipynb
-*.png
