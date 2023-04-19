@@ -12,6 +12,8 @@ class Neuron(Module):
             self.b = Value(random.uniform(-1,1))
         else: 
             self.b = Value(0.)
+        if activation not in ["relu", "sigmoid", "tanh", "linear"]:
+            raise ValueError("Select between the following activation functions: relu, sigmoid, tanh, linear.")
         self.activation = activation
 
     def __call__(self, x):
@@ -25,7 +27,7 @@ class Neuron(Module):
         elif self.activation == "linear":
             return act 
         else:
-            raise ValueError("Select between the following activation functions: relu, sigmoid, tanh, linear.")
+            pass
 
     def parameters(self):
         return self.w + [self.b]
@@ -40,7 +42,7 @@ class Neuron(Module):
         elif self.activation == "linear":
             return f"Linear Neuron({len(self.w)})"
         else:
-            raise ValueError("Select between the following activation functions: relu, sigmoid, tanh, linear.")
+            pass
 
     
 
