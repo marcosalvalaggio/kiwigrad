@@ -10,11 +10,12 @@ print(y.shape, type(y))
 
 class PotNet(MLP):
     def __init__(self):
-        self.layers = [
+        layers = [
             Layer(nin=2, nout=16, bias=True, activation="relu"),
             Layer(nin=16, nout=16, bias=True, activation="relu"),
             Layer(nin=16, nout=1, bias=True, activation="linear")
         ]
+        super().__init__(layers=layers)
 
 model = PotNet()
 
