@@ -28,7 +28,7 @@ Kiwigrad library is a modified version of the [micrograd](https://github.com/kar
 Here's an example implementation of a MLP net using Kiwigrad:
 
 ```python 
-from kiwigrad import * 
+from kiwigrad import MLP, Layer
 
 class PotNet(MLP):
     def __init__(self):
