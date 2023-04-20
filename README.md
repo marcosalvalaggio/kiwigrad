@@ -1,7 +1,7 @@
 # Kiwigrad
 
 <h1 align="center">
-<img src="logo.png" width="300">
+<img src="logo.png" width="200">
 </h1><br>
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) [![PyPI version fury.io](https://badge.fury.io/py/kiwigrad.svg)](https://pypi.python.org/pypi/kiwigrad/)
