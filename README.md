@@ -4,7 +4,7 @@
 <img src="logo.png" width="200">
 </h1><br>
 
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) 
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) [![PyPI version fury.io](https://badge.fury.io/py/kiwigrad.svg)](https://pypi.python.org/pypi/kiwigrad/)
 
 Kiwigrad? yes, it is another version of [micrograd](https://github.com/karpathy/micrograd) that was created just for fun and experimentation.
 
@@ -26,7 +26,7 @@ Kiwigrad library is a modified version of the [micrograd](https://github.com/kar
 
 ### Examples
 
-* In the examples folder, you can find examples of models trained using the Kiwigrad library.
+* In the [examples](examples/) folder, you can find examples of models trained using the Kiwigrad library.
 * Here is a declaration example of an MLP net using Kiwigrad:
   
 ```python 
