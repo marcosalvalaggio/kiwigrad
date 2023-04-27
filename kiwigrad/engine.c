@@ -159,6 +159,7 @@ static BackwardFunction backward_methods[] = {
    &mul_backward,
    &pow_backward,
    &relu_backward
+   //&sigmoid_backward
   };
 
 static PyObject * Value_relu(PyObject *self) {
