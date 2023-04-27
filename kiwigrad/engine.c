@@ -116,13 +116,13 @@ relu_backward(PyObject *self) {
   Py_RETURN_NONE;
 }
 
-// static PyObject *
-// sigmoid_backward(PyObject *self) {
-//  double x = ((Value *)self)->data;
-//  double t = 1 / (1 + exp(-x));
-//  Value *child = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 0));
-//  child->grad += (t * (1 - t)) * ((Value *)self)->grad;
-// }
+static PyObject *
+sigmoid_backward(PyObject *self) {
+  Value *child = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 0));
+  double x = ((Value *)self)->data;
+  child->grad += (x * (1 - x)) * ((Value *)self)->grad;
+  Py_RETURN_NONE;
+}
 
 static PyObject *
 add_backward(PyObject *self) {
@@ -158,8 +158,8 @@ static BackwardFunction backward_methods[] = {
    &add_backward,
    &mul_backward,
    &pow_backward,
-   &relu_backward
-   //&sigmoid_backward
+   &relu_backward,
+   &sigmoid_backward
   };
 
 static PyObject * Value_relu(PyObject *self) {
@@ -174,6 +174,18 @@ static PyObject * Value_relu(PyObject *self) {
   value->func_idx = 3;
   return (PyObject *)value;
 }
+
+static PyObject * Value_sigmoid(PyObject *self) {
+  Value *value = (Value *)Value_Type.tp_alloc(&Value_Type, 0);
+  double x = ((Value *)self)->data;
+  double t = 1 / (1 + exp(-x));
+  value->data = t;
+  value->grad = 0.0;
+  value->prev = PyTuple_Pack(1, self);
+  value->func_idx = 4;
+  return (PyObject *)value;
+}
+
 
 static void list_append(List *list, PyObject *value) {
   Node *node = malloc(sizeof(Node));
@@ -231,6 +243,7 @@ backward(PyObject *self){
 
 static PyMethodDef Value_methods[] = {
     {"relu", (PyCFunction)Value_relu, METH_NOARGS, "ReLU"},
+    {"sigmoid", (PyCFunction)Value_sigmoid, METH_NOARGS, "Sigmoid"},
     // {"_backward", (PyCFunction)_backward, METH_NOARGS, "Backward"}, // DEBUG
     {"backward", (PyCFunction)backward, METH_NOARGS, "Backward"},
     {NULL}  /* Sentinel */
