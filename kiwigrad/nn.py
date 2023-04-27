@@ -1,4 +1,5 @@
-from .engine import Value
+#from .engine import Value
+from kiwigrad.engine import Value
 import pickle
 from typing import Literal
 from .skeleton import Module

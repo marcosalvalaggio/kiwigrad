@@ -1,4 +1,5 @@
-from .engine import Value
+#from .engine import Value
+from kiwigrad.engine import Value
 import random 
 from typing import Literal
 from .skeleton import Module

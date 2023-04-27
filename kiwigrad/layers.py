@@ -1,4 +1,5 @@
-from .engine import Value
+#from .engine import Value
+from kiwigrad.engine import Value
 from .neurons import Neuron, RNN1Neuron
 from typing import Literal
 from .skeleton import Module
