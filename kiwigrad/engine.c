@@ -118,7 +118,10 @@ relu_backward(PyObject *self) {
 
 // static PyObject *
 // sigmoid_backward(PyObject *self) {
-
+//  double x = ((Value *)self)->data;
+//  double t = 1 / (1 + exp(-x));
+//  Value *child = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 0));
+//  child->grad += (t * (1 - t)) * ((Value *)self)->grad;
 // }
 
 static PyObject *
