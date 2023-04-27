@@ -43,3 +43,8 @@ class PotNet(MLP):
 
 model = PotNet()
 ```
+
+## TODOS
+
+* Include the activation functions sigmoid and tanh in the Value object.
+* Add a notebook example for training a neural network on a regression problem.

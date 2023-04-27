@@ -116,6 +116,11 @@ relu_backward(PyObject *self) {
   Py_RETURN_NONE;
 }
 
+// static PyObject *
+// sigmoid_backward(PyObject *self) {
+
+// }
+
 static PyObject *
 add_backward(PyObject *self) {
   Value *child_1 = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 0));
