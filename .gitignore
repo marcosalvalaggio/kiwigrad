@@ -6,3 +6,4 @@ build
 *.toml
 *.sh
 regression_old.ipynb
+lab.ipynb

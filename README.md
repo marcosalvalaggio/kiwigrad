@@ -53,4 +53,4 @@ model = PotNet()
 ## TODOS
 
 * Include the activation functions tanh in the Value object.
-* Add a notebook example for training a neural network on a regression problem.
+* Fix pow function.

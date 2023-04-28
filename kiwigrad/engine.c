@@ -152,15 +152,28 @@ mul_backward(PyObject *self) {
   Py_RETURN_NONE;
 }
 
+// older version
+// static PyObject *
+// pow_backward(PyObject *self) {
+//   Value *child = ((Value*)PyTuple_GetItem(((Value *)self)->prev, 0));
+
+//   child->grad += PyFloat_AsDouble(((Value *)self)->tmp) *
+//     pow(child->data, PyFloat_AsDouble(((Value *)self)->tmp) - 1.0) *
+//     ((Value *)self)->grad;
+//   Py_RETURN_NONE;
+// }
+
+// need to fix **********************************
 static PyObject *
 pow_backward(PyObject *self) {
   Value *child = ((Value*)PyTuple_GetItem(((Value *)self)->prev, 0));
-
-  child->grad += PyFloat_AsDouble(((Value *)self)->tmp) *
-    pow(child->data, PyFloat_AsDouble(((Value *)self)->tmp) - 1.0) *
-    ((Value *)self)->grad;
+  double esp = ((Value *)self)->tmp;
+  double x =  ((Value *)self)->data;
+  double t = pow(x, 1.0/esp);
+  child->grad += esp * pow(t, (esp-1)) * ((Value *)self)->grad;
   Py_RETURN_NONE;
 }
+// need to fix **********************************
 
 typedef PyObject * (*BackwardFunction)(PyObject *);
 static BackwardFunction backward_methods[] = {
