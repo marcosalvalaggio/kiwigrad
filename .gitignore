@@ -5,3 +5,4 @@ engine.py
 build
 *.toml
 *.sh
+regression_old.ipynb
