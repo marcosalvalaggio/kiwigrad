@@ -6,6 +6,12 @@
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) 
 
+- [Kiwigrad](#kiwigrad)
+  - [Install](#install)
+  - [Kiwigrad Library](#kiwigrad-library)
+    - [Examples](#examples)
+  - [TODOS](#todos)
+
 Kiwigrad? yes, it is another version of [micrograd](https://github.com/karpathy/micrograd) that was created just for fun and experimentation.
 
 ## Install 
