@@ -128,7 +128,7 @@ static PyObject *
 log_backward(PyObject *self) {
   Value *child = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 0));
   double x = ((Value *)self)->data;
-  double t = exp(x)
+  double t = exp(x);
   child->grad += (pow(t, -1)) * ((Value *)self)->grad;
   Py_RETURN_NONE;
 }
