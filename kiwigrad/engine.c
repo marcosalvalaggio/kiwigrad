@@ -125,6 +125,14 @@ sigmoid_backward(PyObject *self) {
 }
 
 static PyObject *
+log_backward(PyObject *self) {
+  Value *child = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 0));
+  double x = ((Value *)self)->data;
+  child->grad += (pow(x, -1)) * ((Value *)self)->grad;
+  Py_RETURN_NONE;
+}
+
+static PyObject *
 add_backward(PyObject *self) {
   Value *child_1 = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 0));
   Value *child_2 = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 1));
@@ -159,7 +167,8 @@ static BackwardFunction backward_methods[] = {
    &mul_backward,
    &pow_backward,
    &relu_backward,
-   &sigmoid_backward
+   &sigmoid_backward,
+   &log_backward
   };
 
 static PyObject * Value_relu(PyObject *self) {
@@ -183,6 +192,17 @@ static PyObject * Value_sigmoid(PyObject *self) {
   value->grad = 0.0;
   value->prev = PyTuple_Pack(1, self);
   value->func_idx = 4;
+  return (PyObject *)value;
+}
+
+static PyObject * Value_log(PyObject *self) {
+  Value *value = (Value *)Value_Type.tp_alloc(&Value_Type, 0);
+  double x = ((Value *)self)->data;
+  double t = log(x);
+  value->data = t;
+  value->grad = 0.0;
+  value->prev = PyTuple_Pack(1, self);
+  value->func_idx = 5;
   return (PyObject *)value;
 }
 
@@ -244,6 +264,7 @@ backward(PyObject *self){
 static PyMethodDef Value_methods[] = {
     {"relu", (PyCFunction)Value_relu, METH_NOARGS, "ReLU"},
     {"sigmoid", (PyCFunction)Value_sigmoid, METH_NOARGS, "Sigmoid"},
+    {"log", (PyCFunction)Value_log, METH_NOARGS, "Log"},
     // {"_backward", (PyCFunction)_backward, METH_NOARGS, "Backward"}, // DEBUG
     {"backward", (PyCFunction)backward, METH_NOARGS, "Backward"},
     {NULL}  /* Sentinel */
