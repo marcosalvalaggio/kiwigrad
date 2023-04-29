@@ -9,6 +9,7 @@ typedef struct {
   PyObject_HEAD
   double data;
   double grad;
+  double oa;
   PyObject *prev;
   int func_idx;
   PyObject *tmp;
@@ -41,6 +42,7 @@ Value_new(PyTypeObject *type,
     value->grad = 0.0;
     value->visited = 0;
     value->data = data;
+    value->oa = 0.0;
     value->prev = PyTuple_New(0);
     value->topology = NULL;
     value->tmp = Py_None;
@@ -155,7 +157,7 @@ mul_backward(PyObject *self) {
 static PyObject *
 pow_backward(PyObject *self) {
   Value *child = ((Value*)PyTuple_GetItem(((Value *)self)->prev, 0));
-  double exponent = PyFloat_AsDouble(((Value *)self)->tmp);
+  double exponent = ((Value *)self)->oa; 
   double base = child->data;
   child->grad += exponent * pow(base, exponent - 1.0) * ((Value *)self)->grad;
   Py_RETURN_NONE;
@@ -301,7 +303,8 @@ PyObject * pyvalue_pow(PyObject *self, PyObject *other, PyObject *arg) {
   value->data = pow(((Value *)self)->data, PyFloat_AsDouble(other));
   value->grad = 0.0;
   value->prev = PyTuple_Pack(1, self);
-  value->tmp = other;
+  value->oa = PyFloat_AsDouble(other);
+  //value->tmp = other;
   value->func_idx = 2;
   return (PyObject *)value;
 }
