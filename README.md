@@ -53,4 +53,3 @@ model = PotNet()
 ## TODOS
 
 * Include the activation functions tanh in the Value object.
-* Fix pow function.

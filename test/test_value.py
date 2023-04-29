@@ -15,11 +15,9 @@ class TestValue(unittest.TestCase):
         bt = torch.tensor([3.], requires_grad=True)
         ct = at + bt
         ct.backward()
-        at_g = float(at.grad)
-        bt_g = float(bt.grad)
         #test
-        self.assertAlmostEqual(a.grad, at_g)
-        self.assertAlmostEqual(b.grad, bt_g)
+        self.assertAlmostEqual(a.grad, at.grad)
+        self.assertAlmostEqual(b.grad, bt.grad)
 
     def test_mul_operation(self):
         #kiwigrad
@@ -32,11 +30,9 @@ class TestValue(unittest.TestCase):
         bt = torch.tensor([3.], requires_grad=True)
         ct = at * bt
         ct.backward()
-        at_g = float(at.grad)
-        bt_g = float(bt.grad)
         #test 
-        self.assertAlmostEqual(a.grad, at_g)
-        self.assertAlmostEqual(b.grad, bt_g)
+        self.assertAlmostEqual(a.grad, at.grad)
+        self.assertAlmostEqual(b.grad, bt.grad)
 
     def test_pow_operation(self):
         #kiwigrad
@@ -45,11 +41,23 @@ class TestValue(unittest.TestCase):
         b.backward()
         #pytorch
         at = torch.tensor([2.], requires_grad=True)
-        bt = a ** 2
+        bt = at ** 2
         bt.backward()
-        bt_g = float(bt.grad)
         #test
-        self.assertAlmostEqual(b.grad, bt_g)
+        self.assertAlmostEqual(a.grad, at.grad)
+
+    def test_log_operation(self):
+        #kiwigrad
+        a = Value(2.)
+        b = a.log()
+        b.backward()
+        #pytorch
+        at = torch.tensor([2.], requires_grad=True)
+        bt = at.log()
+        bt.backward()
+        #test
+        self.assertAlmostEqual(a.grad, at.grad)
+
 
 
 
