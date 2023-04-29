@@ -8,3 +8,4 @@ build
 regression_old.ipynb
 lab.ipynb
 build.py
+__pycache__
