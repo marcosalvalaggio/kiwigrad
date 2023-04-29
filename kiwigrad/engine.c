@@ -155,10 +155,9 @@ mul_backward(PyObject *self) {
 static PyObject *
 pow_backward(PyObject *self) {
   Value *child = ((Value*)PyTuple_GetItem(((Value *)self)->prev, 0));
-
-  child->grad += PyFloat_AsDouble(((Value *)self)->tmp) *
-    pow(child->data, PyFloat_AsDouble(((Value *)self)->tmp) - 1.0) *
-    ((Value *)self)->grad;
+  double exponent = PyFloat_AsDouble(((Value *)self)->tmp);
+  double base = child->data;
+  child->grad += exponent * pow(base, exponent - 1.0) * ((Value *)self)->grad;
   Py_RETURN_NONE;
 }
 
