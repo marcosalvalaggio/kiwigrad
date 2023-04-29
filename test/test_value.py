@@ -58,6 +58,20 @@ class TestValue(unittest.TestCase):
         #test
         self.assertAlmostEqual(a.grad, at.grad)
 
+    def test_sigmoid_operation(self):
+        #kiwigrad
+        a = Value(2.)
+        b = a.sigmoid()
+        b.backward()
+        #pytorch
+        at = torch.tensor([2.], requires_grad=True)
+        bt = at.sigmoid()
+        bt.backward()
+        at_g = float(at.grad)
+        #test
+        self.assertAlmostEqual(a.grad, at_g)
+
+
 
 
 
