@@ -72,9 +72,5 @@ class TestValue(unittest.TestCase):
         self.assertAlmostEqual(a.grad, at_g)
 
 
-
-
-
-
 # if __name__ == "__main__":
 #     unittest.main()
