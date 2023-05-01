@@ -276,7 +276,7 @@ static PyMethodDef Value_methods[] = {
 static PyMemberDef Value_members[] = {
    {"data", T_DOUBLE, offsetof(Value, data), 0, "Data"},
    {"grad", T_DOUBLE, offsetof(Value, grad), 0, "Gradient of the Object"},
-   {"prev", T_OBJECT_EX, offsetof(Value, prev), 0, "Children"}, // DEBUG
+   {"_prev", T_OBJECT, offsetof(Value, prev), 0, "Children"}, // DEBUG
    {NULL}
   };
 

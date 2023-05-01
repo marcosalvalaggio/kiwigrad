@@ -3,7 +3,7 @@ from .layers import Layer, RNN1Layer
 from .nn import MLP
 from kiwigrad.engine import Value
 
-__version__ = "0.24"
+__version__ = "0.25"
 
 __all__ = [
     "Value",
