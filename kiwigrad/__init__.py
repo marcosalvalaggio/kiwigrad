@@ -1,10 +1,10 @@
 from .neurons import Neuron, RNN1Neuron
 from .layers import Layer, RNN1Layer
 from .nn import MLP
-from kiwigrad.engine import Value
 from .graph import draw_dot
+from kiwigrad.engine import Value
 
-__version__ = "0.25"
+__version__ = "0.26"
 
 __all__ = [
     "Value",

@@ -9,7 +9,7 @@ with open(os.path.join(directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='kiwigrad',
-      version='0.25',
+      version='0.26',
       description='Mini deep learning framework',
       author='Marco Salvalaggio',
       author_email='mar.salvalaggio@gmail.com',
@@ -26,6 +26,6 @@ setup(name='kiwigrad',
       ],
       python_requires='>=3.6',
       install_requires=[
-          'graphviz'
+          'graphviz',
       ]
 )
