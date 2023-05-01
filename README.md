@@ -6,6 +6,8 @@
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) 
 
+*Though it cannot soar through the skies like **PyTorch** and **TensorFlow**, the kiwi remains a powerful bird brimming with hidden aces waiting to be revealed* ;)
+
 - [Kiwigrad](#kiwigrad)
   - [Install](#install)
   - [Functionalities](#functionalities)
