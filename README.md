@@ -8,9 +8,9 @@
 
 - [Kiwigrad](#kiwigrad)
   - [Install](#install)
-  - [Why kiwigrad](#why-kiwigrad)
+  - [Functionalities](#functionalities)
     - [Examples](#examples)
-  - [TODOS](#todos)
+  - [Todos](#todos)
 
 Kiwigrad? yes, it is another version of [micrograd](https://github.com/karpathy/micrograd) that was created just for fun and experimentation.
 
@@ -22,7 +22,7 @@ To install the current release,
 pip install kiwigrad
 ```
 
-## Why kiwigrad
+## Functionalities 
 
 Kiwigrad is a modified version of the [micrograd](https://github.com/karpathy/micrograd) and the [minigrad](https://github.com/goktug97/minigrad) packages with additional features. The main features added to Kiwigrad are:
 
@@ -51,6 +51,6 @@ class PotNet(MLP):
 model = PotNet()
 ```
 
-## TODOS
+## Todos
 
 * Include the activation functions tanh in the Value object.
