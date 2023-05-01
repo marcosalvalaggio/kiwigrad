@@ -4,73 +4,41 @@ import unittest
 
 class TestValue(unittest.TestCase):
 
-    def test_add_operation(self):
-        #kiwigrad
-        a = Value(2.)
-        b = Value(3.)
-        c = a + b
-        c.backward()
-        #pytorch
-        at = torch.tensor([2.], requires_grad=True)
-        bt = torch.tensor([3.], requires_grad=True)
-        ct = at + bt
-        ct.backward()
-        #test
-        self.assertAlmostEqual(a.grad, at.grad)
-        self.assertAlmostEqual(b.grad, bt.grad)
-
-    def test_mul_operation(self):
-        #kiwigrad
-        a = Value(2.)
-        b = Value(3.)
-        c = a * b
-        c.backward()
-        #pytorch
-        at = torch.tensor([2.], requires_grad=True)
-        bt = torch.tensor([3.], requires_grad=True)
-        ct = at * bt
-        ct.backward()
-        #test 
-        self.assertAlmostEqual(a.grad, at.grad)
-        self.assertAlmostEqual(b.grad, bt.grad)
-
-    def test_pow_operation(self):
-        #kiwigrad
-        a = Value(2.)
-        b = a ** 2
-        b.backward()
-        #pytorch
-        at = torch.tensor([2.], requires_grad=True)
-        bt = at ** 2
-        bt.backward()
-        #test
-        self.assertAlmostEqual(a.grad, at.grad)
-
-    def test_log_operation(self):
-        #kiwigrad
-        a = Value(2.)
-        b = a.log()
-        b.backward()
-        #pytorch
-        at = torch.tensor([2.], requires_grad=True)
-        bt = at.log()
-        bt.backward()
-        #test
-        self.assertAlmostEqual(a.grad, at.grad)
-
-    def test_sigmoid_operation(self):
+    def test_activation_function(self):
         #kiwigrad
         a = Value(2.)
         b = a.sigmoid()
-        b.backward()
+        c = b.relu()
+        c.backward()
         #pytorch
         at = torch.tensor([2.], requires_grad=True)
         bt = at.sigmoid()
-        bt.backward()
+        ct = bt.relu()
+        ct.backward()
         at_g = float(at.grad)
         #test
         self.assertAlmostEqual(a.grad, at_g)
 
+    def test_more_ops(self):
+        #kiwigrad
+        a = Value(3.)
+        b = Value(3.)
+        c = (a * Value(2))
+        d = (c - b) ** 2
+        e = d.log()
+        e.backward()
+        #torch
+        at = torch.tensor([3.], requires_grad=True)
+        bt = torch.tensor([3.], requires_grad=True)
+        ct = at * 2
+        dt = (ct - bt) ** 2
+        et = dt.log()
+        et.backward()
+        at_g = float(at.grad)
+        bt_g = float(bt.grad)
+        self.assertAlmostEqual(a.grad, at_g)
+        self.assertAlmostEqual(b.grad, bt_g)
 
+        
 # if __name__ == "__main__":
 #     unittest.main()
