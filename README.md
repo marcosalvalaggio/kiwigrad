@@ -6,7 +6,7 @@
 
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) 
 
-*Though it cannot soar through the skies like **PyTorch** and **TensorFlow**, the kiwi remains a powerful bird brimming with hidden aces waiting to be revealed* ;)
+*Despite lacking the ability to fly through the skies like **PyTorch** and **TensorFlow**, the Kiwigrad is still a formidable bird that is teeming with untapped potential waiting to be uncovered.* ;)
 
 - [Kiwigrad](#kiwigrad)
   - [Install](#install)
@@ -36,7 +36,7 @@ Kiwigrad is a modified version of the [micrograd](https://github.com/karpathy/mi
 ### Examples
 
 * In the [examples](examples/) folder, you can find examples of models trained using the Kiwigrad library.
-* Here is a declaration example of an MLP net using Kiwigrad:
+* A declaration example of an MLP net using Kiwigrad:
   
 ```python 
 from kiwigrad import MLP, Layer
@@ -51,6 +51,30 @@ class PotNet(MLP):
         super().__init__(layers=layers)
 
 model = PotNet()
+```
+* Kiwigrad like [micrograd](https://github.com/karpathy/micrograd) and the [minigrad](https://github.com/goktug97/minigrad) comes with support for a number of possible operations:
+
+```python 
+from kiwigrad import Value, draw_dot
+
+a = Value(-4.0)
+b = Value(2.0)
+c = a + b
+d = a * b + b**3
+c += c + Value(1.)
+c += Value(1.) + c + (-a)
+d += d * Value(2) + (b + a).relu()
+d += Value(3.) * d + (b - a).relu()
+e = c - d
+f = e**2
+g = f / Value(2.0)
+g += Value(10.0) / f
+print(f'{g.data:.4f}') # prints 24.7041, the outcome of this forward pass
+g.backward()
+print(f'{a.grad:.4f}') # prints 138.8338, i.e. the numerical value of dg/da
+print(f'{b.grad:.4f}') # prints 645.5773, i.e. the numerical value of dg/db
+
+draw_dot(g)
 ```
 
 ## Todos
