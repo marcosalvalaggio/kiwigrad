@@ -11,6 +11,7 @@ typedef struct {
   double grad;
   double oa;
   PyObject *prev;
+  PyObject *op;
   int func_idx;
   PyObject *tmp;
   List *topology;
@@ -44,6 +45,7 @@ Value_new(PyTypeObject *type,
     value->data = data;
     value->oa = 0.0;
     value->prev = PyTuple_New(0);
+    value->op = Py_None;
     value->topology = NULL;
     value->tmp = Py_None;
     value->func_idx = -1;
@@ -183,6 +185,7 @@ static PyObject * Value_relu(PyObject *self) {
   }
   value->grad = 0.0;
   value->prev = PyTuple_Pack(1, self);
+  value->op = PyUnicode_FromString("relu");
   value->func_idx = 3;
   return (PyObject *)value;
 }
@@ -194,6 +197,7 @@ static PyObject * Value_sigmoid(PyObject *self) {
   value->data = t;
   value->grad = 0.0;
   value->prev = PyTuple_Pack(1, self);
+  value->op = PyUnicode_FromString("sigmoid");
   value->func_idx = 4;
   return (PyObject *)value;
 }
@@ -205,6 +209,7 @@ static PyObject * Value_log(PyObject *self) {
   value->data = t;
   value->grad = 0.0;
   value->prev = PyTuple_Pack(1, self);
+  value->op = PyUnicode_FromString("log");
   value->func_idx = 5;
   return (PyObject *)value;
 }
@@ -277,6 +282,7 @@ static PyMemberDef Value_members[] = {
    {"data", T_DOUBLE, offsetof(Value, data), 0, "Data"},
    {"grad", T_DOUBLE, offsetof(Value, grad), 0, "Gradient of the Object"},
    {"_prev", T_OBJECT, offsetof(Value, prev), 0, "Children"}, // DEBUG
+   {"_op", T_OBJECT, offsetof(Value, op), 0, "Label"},
    {NULL}
   };
 
@@ -285,6 +291,7 @@ PyObject * pyvalue_add(PyObject *self, PyObject *other) {
   value->data = ((Value *)self)->data + ((Value *)other)->data;
   value->grad = 0.0;
   value->prev = PyTuple_Pack(2, self, other);
+  value->op = PyUnicode_FromString("+");
   value->func_idx = 0;
   return (PyObject *)value;
 }
@@ -294,6 +301,7 @@ PyObject * pyvalue_mul(PyObject *self, PyObject *other) {
   value->data = ((Value *)self)->data * ((Value *)other)->data;
   value->grad = 0.0;
   value->prev = PyTuple_Pack(2, self, other);
+  value->op = PyUnicode_FromString("*");
   value->func_idx = 1;
   return (PyObject *)value;
 }
@@ -304,6 +312,7 @@ PyObject * pyvalue_pow(PyObject *self, PyObject *other, PyObject *arg) {
   value->grad = 0.0;
   value->prev = PyTuple_Pack(1, self);
   value->oa = PyFloat_AsDouble(other);
+  value->op = PyUnicode_FromString("pow");
   //value->tmp = other;
   value->func_idx = 2;
   return (PyObject *)value;
