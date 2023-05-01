@@ -8,7 +8,7 @@
 
 - [Kiwigrad](#kiwigrad)
   - [Install](#install)
-  - [Kiwigrad Library](#kiwigrad-library)
+  - [Why kiwigrad](#why-kiwigrad)
     - [Examples](#examples)
   - [TODOS](#todos)
 
@@ -22,9 +22,9 @@ To install the current release,
 pip install kiwigrad
 ```
 
-## Kiwigrad Library
+## Why kiwigrad
 
-Kiwigrad library is a modified version of the [micrograd](https://github.com/karpathy/micrograd) and the [minigrad](https://github.com/goktug97/minigrad) packages with additional features. The main features added to Kiwigrad are:
+Kiwigrad is a modified version of the [micrograd](https://github.com/karpathy/micrograd) and the [minigrad](https://github.com/goktug97/minigrad) packages with additional features. The main features added to Kiwigrad are:
 
 * Training is faster due to the C implementation of the Value object.
 * Tracing functionalities like the original [micrograd](https://github.com/karpathy/micrograd) package were added. An example of this can be seen in the [ops](examples/ops.ipynb) notebook.
