@@ -27,6 +27,7 @@ pip install kiwigrad
 Kiwigrad library is a modified version of the [micrograd](https://github.com/karpathy/micrograd) and the [minigrad](https://github.com/goktug97/minigrad) packages with additional features. The main features added to Kiwigrad are:
 
 * Training is faster due to the C implementation of the Value object.
+* Tracing functionalities like the original [micrograd](https://github.com/karpathy/micrograd) package were added. An example of this can be seen in the [ops](examples/ops.ipynb) notebook.
 * Methods for saving and loading the weights of a trained model.
 * Support for RNN(1) feedforward neural networks.
 
