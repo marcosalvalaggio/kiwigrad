@@ -4,7 +4,7 @@ from .nn import MLP
 from .graph import draw_dot
 from kiwigrad.engine import Value
 
-__version__ = "0.26"
+__version__ = "0.27"
 
 __all__ = [
     "Value",
