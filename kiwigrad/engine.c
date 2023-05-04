@@ -138,6 +138,14 @@ log_backward(PyObject *self) {
 }
 
 static PyObject *
+tanh_backward(PyObject *self) {
+  Value *child = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 0));
+  double x = ((Value *)self)->data;
+  child->grad += (1 - pow(x, 2)) * ((Value *)self)->grad;
+  Py_RETURN_NONE;
+}
+
+static PyObject *
 add_backward(PyObject *self) {
   Value *child_1 = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 0));
   Value *child_2 = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 1));
@@ -173,7 +181,8 @@ static BackwardFunction backward_methods[] = {
    &pow_backward,
    &relu_backward,
    &sigmoid_backward,
-   &log_backward
+   &log_backward,
+   &tanh_backward
   };
 
 static PyObject * Value_relu(PyObject *self) {
@@ -214,6 +223,17 @@ static PyObject * Value_log(PyObject *self) {
   return (PyObject *)value;
 }
 
+static PyObject * Value_tanh(PyObject *self) {
+  Value *value = (Value *)Value_Type.tp_alloc(&Value_Type, 0);
+  double x = ((Value *)self)->data;
+  double t = (exp(2*x) - 1)/(exp(2*x) + 1)
+  value->data = t;
+  value->grad = 0.0;
+  value->prev = PyTuple_Pack(1, self);
+  value->op = PyUnicode_FromString("tanh");
+  value->func_idx = 6;
+  return (PyObject *)value;
+}
 
 static void list_append(List *list, PyObject *value) {
   Node *node = malloc(sizeof(Node));
@@ -273,6 +293,7 @@ static PyMethodDef Value_methods[] = {
     {"relu", (PyCFunction)Value_relu, METH_NOARGS, "ReLU"},
     {"sigmoid", (PyCFunction)Value_sigmoid, METH_NOARGS, "Sigmoid"},
     {"log", (PyCFunction)Value_log, METH_NOARGS, "Log"},
+    {"tanh", (PyCFunction)Value_tanh, METH_NOARGS, "Tanh"},
     // {"_backward", (PyCFunction)_backward, METH_NOARGS, "Backward"}, // DEBUG
     {"backward", (PyCFunction)backward, METH_NOARGS, "Backward"},
     {NULL}  /* Sentinel */
