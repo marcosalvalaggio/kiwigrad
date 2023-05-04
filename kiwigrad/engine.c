@@ -226,7 +226,7 @@ static PyObject * Value_log(PyObject *self) {
 static PyObject * Value_tanh(PyObject *self) {
   Value *value = (Value *)Value_Type.tp_alloc(&Value_Type, 0);
   double x = ((Value *)self)->data;
-  double t = (exp(2*x) - 1)/(exp(2*x) + 1)
+  double t = (exp(2*x) - 1)/(exp(2*x) + 1);
   value->data = t;
   value->grad = 0.0;
   value->prev = PyTuple_Pack(1, self);
