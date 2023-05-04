@@ -4,17 +4,19 @@ import unittest
 
 class TestValue(unittest.TestCase):
 
-    def test_activation_function(self):
+    def test_activation_functions(self):
         #kiwigrad
         a = Value(2.)
         b = a.sigmoid()
         c = b.relu()
-        c.backward()
+        d = c.tanh()
+        d.backward()
         #pytorch
         at = torch.tensor([2.], requires_grad=True)
         bt = at.sigmoid()
         ct = bt.relu()
-        ct.backward()
+        dt = ct.tanh()
+        dt.backward()
         at_g = float(at.grad)
         #test
         self.assertAlmostEqual(a.grad, at_g)
