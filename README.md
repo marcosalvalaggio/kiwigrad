@@ -79,4 +79,4 @@ draw_dot(g)
 
 ## Todos
 
-* Include the activation functions tanh in the Value object.
+* Include the exp() function to the Value object
