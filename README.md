@@ -26,7 +26,7 @@ pip install kiwigrad
 
 ## Functionalities 
 
-Kiwigrad is a modified version of the [micrograd](https://github.com/karpathy/micrograd) and the [minigrad](https://github.com/goktug97/minigrad) packages with additional features. The main features added to Kiwigrad are:
+Kiwigrad is a modified version of the [micrograd](https://github.com/karpathy/micrograd) package with additional features. The main features added to Kiwigrad are:
 
 * Training is faster due to the C implementation of the Value object.
 * Tracing functionalities like the original [micrograd](https://github.com/karpathy/micrograd) package were added. An example of this can be seen in the [ops](examples/ops.ipynb) notebook.
@@ -52,7 +52,7 @@ class PotNet(MLP):
 
 model = PotNet()
 ```
-* Kiwigrad like [micrograd](https://github.com/karpathy/micrograd) and the [minigrad](https://github.com/goktug97/minigrad) comes with support for a number of possible operations:
+* Kiwigrad like [micrograd](https://github.com/karpathy/micrograd) comes with support for a number of possible operations:
 
 ```python 
 from kiwigrad import Value, draw_dot
