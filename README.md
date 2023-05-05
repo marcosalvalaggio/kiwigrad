@@ -1,4 +1,4 @@
-# Kiwigrad
+## Kiwigrad
 
 <h1 align="center">
 <img src="logo.png" width="200">
@@ -9,10 +9,10 @@
 *Despite lacking the ability to fly through the skies like **PyTorch** and **TensorFlow**, the Kiwigrad is still a formidable bird that is teeming with untapped potential waiting to be uncovered.* :wink:
 
 - [Kiwigrad](#kiwigrad)
-  - [Install](#install)
-  - [Functionalities](#functionalities)
-    - [Examples](#examples)
-  - [Todos](#todos)
+- [Install](#install)
+- [Functionalities](#functionalities)
+  - [Examples](#examples)
+- [Running test](#running-test)
 
 Kiwigrad? yes, it is another version of [micrograd](https://github.com/karpathy/micrograd) that was created just for fun and experimentation.
 
@@ -77,6 +77,9 @@ print(f'{b.grad:.4f}') # prints 645.5773, i.e. the numerical value of dg/db
 draw_dot(g)
 ```
 
-## Todos
+## Running test
 
-* Include the **exp** function to the Value object
+```console
+cd test 
+pytest .
+```

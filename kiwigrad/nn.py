@@ -31,9 +31,8 @@ class MLP(Module):
         with open(file_name, 'wb') as f:
             pickle.dump(weights, f)
     
-    def load(self, save_name: str = "weights"):
-        file_name = f'{save_name}.pkl'
-        with open(file_name, 'rb') as f:
+    def load(self, path: str = "weights.pkl"):
+        with open(path, 'rb') as f:
             params = pickle.load(f)
         load_weights = []
         for param in params:
