@@ -4,7 +4,6 @@ kiwigrad/__pycache__
 engine.py
 build
 *.toml
-regression_old.ipynb
 lab.ipynb
 build.py
 __pycache__
