@@ -146,6 +146,14 @@ tanh_backward(PyObject *self) {
 }
 
 static PyObject *
+exp_backward(PyObject *self) {
+  Value *child = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 0));
+  double x = ((Value *)self)->data;
+  child->grad += x * ((Value *)self)->grad;
+  Py_RETURN_NONE;
+}
+
+static PyObject *
 add_backward(PyObject *self) {
   Value *child_1 = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 0));
   Value *child_2 = ((Value *)PyTuple_GetItem(((Value *)self)->prev, 1));
@@ -182,7 +190,8 @@ static BackwardFunction backward_methods[] = {
    &relu_backward,
    &sigmoid_backward,
    &log_backward,
-   &tanh_backward
+   &tanh_backward,
+   &exp_backward
   };
 
 static PyObject * Value_relu(PyObject *self) {
@@ -232,6 +241,18 @@ static PyObject * Value_tanh(PyObject *self) {
   value->prev = PyTuple_Pack(1, self);
   value->op = PyUnicode_FromString("tanh");
   value->func_idx = 6;
+  return (PyObject *)value;
+}
+
+static PyObject * Value_exp(PyObject *self) {
+  Value *value = (Value *)Value_Type.tp_alloc(&Value_Type, 0);
+  double x = ((Value *)self)->data;
+  double t = exp(x);
+  value->data = t;
+  value->grad = 0.0;
+  value->prev = PyTuple_Pack(1, self);
+  value->op = PyUnicode_FromString("exp");
+  value->func_idx = 7;
   return (PyObject *)value;
 }
 
@@ -294,6 +315,7 @@ static PyMethodDef Value_methods[] = {
     {"sigmoid", (PyCFunction)Value_sigmoid, METH_NOARGS, "Sigmoid"},
     {"log", (PyCFunction)Value_log, METH_NOARGS, "Log"},
     {"tanh", (PyCFunction)Value_tanh, METH_NOARGS, "Tanh"},
+    {"exp", (PyCFunction)Value_exp, METH_NOARGS, "Exp"},
     // {"_backward", (PyCFunction)_backward, METH_NOARGS, "Backward"}, // DEBUG
     {"backward", (PyCFunction)backward, METH_NOARGS, "Backward"},
     {NULL}  /* Sentinel */
