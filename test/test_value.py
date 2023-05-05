@@ -10,13 +10,15 @@ class TestValue(unittest.TestCase):
         b = a.sigmoid()
         c = b.relu()
         d = c.tanh()
-        d.backward()
+        f = d.exp()
+        f.backward()
         #pytorch
         at = torch.tensor([2.], requires_grad=True)
         bt = at.sigmoid()
         ct = bt.relu()
         dt = ct.tanh()
-        dt.backward()
+        ft = dt.exp()
+        ft.backward()
         at_g = float(at.grad)
         #test
         self.assertAlmostEqual(a.grad, at_g)
@@ -28,14 +30,16 @@ class TestValue(unittest.TestCase):
         c = (a * Value(2))
         d = (c - b) ** 2
         e = d.log()
-        e.backward()
+        f = e.exp()
+        f.backward()
         #torch
         at = torch.tensor([3.], requires_grad=True)
         bt = torch.tensor([3.], requires_grad=True)
         ct = at * 2
         dt = (ct - bt) ** 2
         et = dt.log()
-        et.backward()
+        ft = et.exp()
+        ft.backward()
         at_g = float(at.grad)
         bt_g = float(bt.grad)
         self.assertAlmostEqual(a.grad, at_g)
