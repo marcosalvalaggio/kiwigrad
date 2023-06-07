@@ -6,4 +6,5 @@ build
 *.toml
 lab.ipynb
 build.py
+.ipynb_checkpoints
 __pycache__
