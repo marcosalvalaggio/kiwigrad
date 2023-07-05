@@ -9,9 +9,9 @@ with open(os.path.join(directory, 'README.md'), encoding='utf-8') as f:
     long_description = f.read()
 
 setup(name='kiwigrad',
-      version='0.28',
+      version='0.29',
       description='Mini deep learning framework',
-      author='Göktuğ Karakaşlı, Marco Salvalaggio',
+      author='Marco Salvalaggio',
       author_email='mar.salvalaggio@gmail.com',
       license='MIT',
       long_description=long_description,
